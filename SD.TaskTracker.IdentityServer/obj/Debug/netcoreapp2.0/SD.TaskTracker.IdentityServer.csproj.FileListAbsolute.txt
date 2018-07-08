@@ -1,0 +1,11 @@
+D:\Projects\TaskTracker\SD.TaskTracker.IdentityServer\bin\Debug\netcoreapp2.0\SD.TaskTracker.IdentityServer.deps.json
+D:\Projects\TaskTracker\SD.TaskTracker.IdentityServer\bin\Debug\netcoreapp2.0\SD.TaskTracker.IdentityServer.runtimeconfig.json
+D:\Projects\TaskTracker\SD.TaskTracker.IdentityServer\bin\Debug\netcoreapp2.0\SD.TaskTracker.IdentityServer.runtimeconfig.dev.json
+D:\Projects\TaskTracker\SD.TaskTracker.IdentityServer\bin\Debug\netcoreapp2.0\SD.TaskTracker.IdentityServer.dll
+D:\Projects\TaskTracker\SD.TaskTracker.IdentityServer\obj\Debug\netcoreapp2.0\SD.TaskTracker.IdentityServer.csprojAssemblyReference.cache
+D:\Projects\TaskTracker\SD.TaskTracker.IdentityServer\obj\Debug\netcoreapp2.0\SD.TaskTracker.IdentityServer.csproj.CoreCompileInputs.cache
+D:\Projects\TaskTracker\SD.TaskTracker.IdentityServer\obj\Debug\netcoreapp2.0\SD.TaskTracker.IdentityServer.AssemblyInfoInputs.cache
+D:\Projects\TaskTracker\SD.TaskTracker.IdentityServer\obj\Debug\netcoreapp2.0\SD.TaskTracker.IdentityServer.AssemblyInfo.cs
+D:\Projects\TaskTracker\SD.TaskTracker.IdentityServer\bin\Debug\netcoreapp2.0\SD.TaskTracker.IdentityServer.pdb
+D:\Projects\TaskTracker\SD.TaskTracker.IdentityServer\obj\Debug\netcoreapp2.0\SD.TaskTracker.IdentityServer.dll
+D:\Projects\TaskTracker\SD.TaskTracker.IdentityServer\obj\Debug\netcoreapp2.0\SD.TaskTracker.IdentityServer.pdb
