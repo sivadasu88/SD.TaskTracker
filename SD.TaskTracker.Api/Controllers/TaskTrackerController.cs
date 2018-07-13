@@ -1,15 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 
 namespace SD.TaskTracker.Api.Controllers
 {
     [Route("tasktracker")]
-    [Authorize]
-
+    // [Authorize]
     public class TaskTrackerController : Controller
     {
         // GET api/values

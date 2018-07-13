@@ -1,4 +1,5 @@
 ﻿using IdentityServer4.Models;
+using IdentityServer4.Stores;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,51 +7,83 @@ using System.Threading.Tasks;
 
 namespace SD.TaskTracker.IdentityServer
 {
-    public class ClientStore
+    public class ClientStore : IClientStore
     {
-        public static IEnumerable<Client> GetClients()
-        {
-            return new List<Client>
-    {
-        new Client
-        {
-            ClientId = "client",
+        private readonly List<Client> clients;
 
-            // no interactive user, use the clientid/secret for authentication
-            AllowedGrantTypes = GrantTypes.ClientCredentials,
+        public ClientStore()
+        {
+            this.clients = new List<Client>();
+            InitializeClients();
+        }
 
-            // secret for authentication
-            ClientSecrets =
+        public Task<Client> FindClientByIdAsync(string clientId)
+        {
+            return Task.FromResult(this.clients.SingleOrDefault(c => c.ClientId.Equals(clientId)));
+        }
+        private void InitializeClients()
+        {
+            foreach (var client in this.GetClientsInternal())
             {
-                new Secret("secret".Sha256())
-            },
-
-            // scopes that client has access to
-            AllowedScopes = { "api1" }
+                try
+                {
+                    client.ClientSecrets = this.GetSecretsFor(client);
+                    this.clients.Add(client);
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
         }
-    };
-        }
-        public static IEnumerable<Client> GetClients1()
-        {
-            return new List<Client>
-    {
-        new Client
-        {
-            ClientId = "client",
 
-            // no interactive user, use the clientid/secret for authentication
-            AllowedGrantTypes = GrantTypes.ClientCredentials,
+        private IEnumerable<Client> GetClientsInternal()
+        {
 
-            // secret for authentication
-            ClientSecrets =
+            yield return new Client
             {
-                new Secret("secret".Sha256())
-            },
+                ClientId = "admin.client",
+                ClientName = "Admin",
+                Enabled = true,
+                AllowedScopes = new List<string>
+                {
+                    KnownScopes.Admin,
+                   KnownScopes.User,
 
-            // scopes that client has access to
-            AllowedScopes = { "api1" }
+                },
+                AllowedGrantTypes = GrantTypes.ClientCredentials,
+                RequireConsent = false,
+                AccessTokenLifetime = 1200,
+                AccessTokenType = AccessTokenType.Jwt
+            };
+            yield return new Client
+            {
+                ClientId = "user.client",
+                ClientName = "User",
+                Enabled = true,
+                AllowedScopes = new List<string>
+                {
+                  KnownScopes.User,
+
+                },
+                AllowedGrantTypes = GrantTypes.ClientCredentials,
+                RequireConsent = false,
+                AccessTokenLifetime = 1200,
+                AccessTokenType = AccessTokenType.Jwt
+            };
+
+
         }
-    };
+
+        private List<Secret> GetSecretsFor(Client client)
+        {
+            var secretKey = client.ClientId + ".secret";
+            var secret = Secrets.GetClientIdSecrets().Where(a => a.ClientId == secretKey).Select(a => a.ClientSecret).FirstOrDefault();
+            if (string.IsNullOrEmpty(secret))
+            {
+                throw new Exception($"{secretKey} environment variable is not set.  See DSCConfiguration\\non_production_client_secrets.bat");
+            }
+            return new List<Secret> { new Secret(secret.Sha256()) };
         }
     }
 }
