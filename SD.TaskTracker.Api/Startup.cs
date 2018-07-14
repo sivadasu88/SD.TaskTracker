@@ -1,13 +1,21 @@
-﻿using FluentValidation.AspNetCore;
+﻿using AutoMapper;
+using FluentValidation.AspNetCore;
 using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.StaticFiles;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Converters;
+using SD.TaskTracker.Data.DataContext;
+using SD.TaskTracker.Data.Interface.Query;
+using SD.TaskTracker.Data.Repository.Query;
+using SD.TaskTracker.Domain.Interface;
+using SD.TaskTracker.Domain.Repository;
 using SD.TaskTracker.Web.Api.Tracing;
 using System;
+
 
 namespace SD.TaskTracker.Api
 {
@@ -25,17 +33,30 @@ namespace SD.TaskTracker.Api
             Configuration = builder.Build();
 
         }
+
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             // ConfigureSecurity(services);
             services.AddMvc();
             services.AddMvcCore()
           //  .AddAuthorization()
           .AddJsonFormatters();
+            // services.AddSingleton<TaskTrackerPostgresContext>();
+            services.AddScoped<IFeatureQuery, FeatureQuery>();
+            services.AddScoped<IFeatureProvider, FeatureProvder>();
+            services.AddAutoMapper(typeof(Startup));
 
+            //Use a PostgreSQL database
+            var sqlConnectionString = Configuration.GetConnectionString("TTPostgresConnection");
+
+            services.AddDbContext<TaskTrackerPostgresContext>(options =>
+                options.UseNpgsql(
+                    sqlConnectionString)
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

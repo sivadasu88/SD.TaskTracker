@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SD.TaskTracker.Domain.Interface;
+using SD.TaskTracker.Domain.Model;
 using System.Collections.Generic;
 
 namespace SD.TaskTracker.Api.Controllers
@@ -7,11 +9,17 @@ namespace SD.TaskTracker.Api.Controllers
     // [Authorize]
     public class TaskTrackerController : Controller
     {
+        private readonly IFeatureProvider _featureProvider;
+        public TaskTrackerController(IFeatureProvider featureProvider)
+        {
+
+            _featureProvider = featureProvider;
+        }
         // GET api/values
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<Feature> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _featureProvider.Get();
         }
 
         // GET api/values/5

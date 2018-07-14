@@ -6,7 +6,7 @@ namespace SD.TaskTracker.Data.Repository.Command
 {
     public class FeatureCommand : IFeatureCommand
     {
-        public bool Add(Feature t)
+        public bool Add(FeatureRecord t)
         {
             throw new System.NotImplementedException();
         }

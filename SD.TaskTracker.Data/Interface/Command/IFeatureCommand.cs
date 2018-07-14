@@ -2,7 +2,7 @@
 
 namespace SD.TaskTracker.Data.Interface.Command
 {
-    public interface IFeatureCommand : ICommandBase<Feature>
+    public interface IFeatureCommand : ICommandBase<FeatureRecord>
     {
     }
 }

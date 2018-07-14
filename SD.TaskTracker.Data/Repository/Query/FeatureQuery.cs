@@ -8,17 +8,17 @@ namespace SD.TaskTracker.Data.Repository.Query
 {
     public class FeatureQuery : IFeatureQuery
     {
-        private readonly TaskTrackerReadContext _context;
+        private readonly TaskTrackerPostgresContext _context;
 
         //  private readonly IApplicationManagementApiClient _amClient;
-        public FeatureQuery(TaskTrackerReadContext context)
+        public FeatureQuery(TaskTrackerPostgresContext context)
         {
 
             _context = context;
 
 
         }
-        public List<Feature> Get()
+        public List<FeatureRecord> Get()
         {
             return _context.Features.ToList();
         }

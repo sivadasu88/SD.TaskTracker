@@ -2,7 +2,7 @@
 
 namespace SD.TaskTracker.Data.Interface.Query
 {
-    public interface IFeatureQuery : IQueryBase<Feature>
+    public interface IFeatureQuery : IQueryBase<FeatureRecord>
     {
 
     }

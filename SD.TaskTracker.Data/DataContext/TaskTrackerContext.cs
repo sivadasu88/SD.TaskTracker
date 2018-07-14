@@ -14,21 +14,10 @@ namespace SD.TaskTracker.Data.DataContext
 
 
 
-        public virtual DbSet<Feature> Features { get; set; }
+        public virtual DbSet<FeatureRecord> Features { get; set; }
 
-        protected TaskTrackerContext(ITenantConnectionStringProvider connectionStringProvider, ILoggerFactory loggerFactory)
-        {
-            _connectionStringProvider = connectionStringProvider;
-            _loggerFactory = loggerFactory;
-            _logger = loggerFactory.CreateLogger(nameof(TaskTrackerContext));
-        }
 
-        protected TaskTrackerContext(ITenantConnectionStringProvider connectionStringProvider, ILoggerFactory loggerFactory, DbContextOptions<TaskTrackerContext> options) : base(options)
-        {
-            _connectionStringProvider = connectionStringProvider;
-            _loggerFactory = loggerFactory;
-            _logger = loggerFactory.CreateLogger(nameof(TaskTrackerContext));
-        }
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -37,7 +26,7 @@ namespace SD.TaskTracker.Data.DataContext
             if (!optionsBuilder.IsConfigured)
             {
                 var connectionString = _connectionStringProvider.GetConnectionString(DataStorePurpose.ReadOnly).GetAwaiter().GetResult();
-                optionsBuilder.UseSqlServer(connectionString);
+               // optionsBuilder.UseSqlServer(connectionString);
 
                 optionsBuilder.UseLoggerFactory(_loggerFactory);
                 optionsBuilder.EnableSensitiveDataLogging();
@@ -47,7 +36,7 @@ namespace SD.TaskTracker.Data.DataContext
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.Entity<Feature>().HasKey(c => new { c.FeatureOwnerID });
+            modelBuilder.Entity<FeatureRecord>().HasKey(c => new { c.FeatureOwnerID });
 
         }
     }

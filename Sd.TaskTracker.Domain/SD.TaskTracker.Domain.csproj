@@ -5,7 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="4.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\SD.TaskTracker.Common\SD.TaskTracker.Common.csproj" />
+    <ProjectReference Include="..\SD.TaskTracker.Data\SD.TaskTracker.Data.csproj" />
   </ItemGroup>
 
 </Project>
